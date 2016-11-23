@@ -27,3 +27,9 @@ wavfile.write("fir.wav", rate, np.tile(normalize(fir), 20))
 aHat, bHat = combineIngredients(pine, fir, m)
 wavfile.write("aHat.wav", rate, np.concatenate((np.tile(normalize(a), 20), np.tile(normalize(aHat), 20))))
 wavfile.write("bHat.wav", rate, np.concatenate((np.tile(normalize(b), 20), np.tile(normalize(bHat), 20))))
+
+hats = [a, b]
+for i in xrange(20):
+    aHat, cHat = combineIngredients(pine, fir, m ** (i + 2) // n ** (i + 1))
+    hats.append(cHat)
+wavfile.write("hats.wav", rate, np.concatenate([np.tile(normalize(hat), 20) for hat in hats]))
